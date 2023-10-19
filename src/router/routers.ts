@@ -3,9 +3,33 @@ import HomeView from "@/views/HomeView.vue";
 import AboutView from "@/views/AboutView.vue";
 import AdminView from "@/views/AdminView.vue";
 import ErrorView from "@/views/ErrorView.vue";
+import UserLayout from "@/layouts/UserLayout.vue";
+import UserLoginView from "@/views/user/UserLoginView.vue";
+import UserRegisterView from "@/views/user/UserRegisterView.vue";
 import AccessEnum from "@/access/AccessEnum";
 
 export const routes: Array<RouteRecordRaw> = [
+  {
+    path: "/user",
+    name: "用户",
+    component: UserLayout,
+    children: [
+      {
+        path: "/user/login",
+        name: "登录",
+        component: UserLoginView,
+      },
+      {
+        path: "/user/register",
+        name: "注册",
+        component: UserRegisterView,
+      },
+    ],
+    meta: {
+      // access: AccessEnum.ADMIN,
+      hideInMenu: true,
+    },
+  },
   {
     path: "/",
     name: "题目浏览",

@@ -8,8 +8,7 @@ import AccessEnum from "@/access/AccessEnum";
  */
 const checkAccess = (loginUser: any, needAccess = AccessEnum.NOT_LOGIN) => {
   // 如果用户未登录，那么用户只能访问不需要登录就能访问的页面
-  const loginUserAccess = loginUser?.role ?? AccessEnum.NOT_LOGIN;
-  console.log(needAccess);
+  const loginUserAccess = loginUser?.UserRole ?? AccessEnum.NOT_LOGIN;
   if (needAccess === AccessEnum.NOT_LOGIN) {
     return true;
   }

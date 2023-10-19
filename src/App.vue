@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <BasicLayout></BasicLayout>
+    <template v-if="$route.path.startsWith('/user')">
+      <router-view />
+    </template>
+    <template v-else>
+      <BasicLayout />
+    </template>
   </div>
 </template>
 
@@ -10,15 +15,10 @@
 </style>
 <script setup lang="ts">
 import BasicLayout from "@/layouts/BasicLayout.vue";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
-
-import AccessEnum from "@/access/AccessEnum";
 import { onMounted } from "vue";
+// import { useRouter } from "vue-router";
 
-const router = useRouter();
-const store = useStore();
-
+// const route = useRouter();
 /**
  * 全局初始化函数，有全局单次调用的代码，都可以写到这里
  */
@@ -50,23 +50,5 @@ const doinit = () => {
 // 使用钩子函数触发
 onMounted(() => {
   doinit();
-});
-
-// 主要看这里，在路由跳转之前会进行监听
-
-router.beforeEach((to, from, next) => {
-  // 判断当前点击的组件是否加了权限
-  if (to.meta.access === AccessEnum.ADMIN) {
-    // 获取当前登录用户的角色信息，判断是否有权限访问该页面
-    if (store.state.user?.loginUser?.role !== "admin") {
-      next({ path: "/error" });
-      return;
-    }
-    next();
-    return;
-  } else {
-    next();
-    return;
-  }
 });
 </script>
